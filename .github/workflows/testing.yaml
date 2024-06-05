@@ -1,4 +1,4 @@
-name: Pre-commit
+name: Testing CI
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
   pull_request:
 
 jobs:
-  pre-commit:
+  run-tests:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false

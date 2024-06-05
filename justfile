@@ -37,7 +37,7 @@ docker-up:
     docker compose up --build
 
 # Start up Docker Compose server in detached mode
-docker-up:
+docker-detached:
     @echo "Starting up full Docker suite..."
     docker compose up -d
 
