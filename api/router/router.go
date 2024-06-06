@@ -15,6 +15,19 @@ import (
 	"github.com/google/uuid"
 )
 
+type Service struct {
+	Router *gin.Engine
+	Port   int
+}
+
+func (s *Service) Run() error {
+	err := s.Router.Run(fmt.Sprintf(":%v", s.Port))
+	if err != nil {
+		return fmt.Errorf("Failed to start service on port %v: %w", s.Port, err)
+	}
+	return nil
+}
+
 // Add the fields we want to expose in the logger to the request context
 func addLoggerFields() gin.HandlerFunc {
 	return func(c *gin.Context) {
@@ -52,7 +65,7 @@ func logRequest() gin.HandlerFunc {
 }
 
 // Configure the router adding routes and middlewares
-func GetRouter() *gin.Engine {
+func getRouter() *gin.Engine {
 	router := gin.Default()
 	router.Use(addLoggerFields())
 	router.Use(logRequest())
@@ -62,4 +75,19 @@ func GetRouter() *gin.Engine {
 	v0.SetRoutes(router)
 
 	return router
+}
+
+/*
+Create a backend service instance.
+
+[IN] port: server port to listen on
+
+[OUT] *Service: new backend service instance
+*/
+func CreateService(port int) *Service {
+	router := getRouter()
+	return &Service{
+		Router: router,
+		Port:   port,
+	}
 }

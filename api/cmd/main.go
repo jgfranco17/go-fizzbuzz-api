@@ -3,7 +3,6 @@ package main
 import (
 	"context"
 	"flag"
-	"fmt"
 
 	"api/env"
 	"api/logging"
@@ -43,8 +42,8 @@ func main() {
 		log.Infof("Running API production server on port %d", *port)
 		gin.SetMode(gin.ReleaseMode)
 	}
-	service := router.GetRouter()
-	err := service.Run(fmt.Sprintf(":%v", *port))
+	service := router.CreateService(*port)
+	err := service.Run()
 	if err != nil {
 		log.Error("Error starting the server:", err)
 	}
