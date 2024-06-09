@@ -28,8 +28,8 @@ build:
 
 # Sync Go modules
 tidy:
-  cd api && go mod tidy
-  go work sync
+    cd api && go mod tidy
+    go work sync
 
 # Start up Docker Compose server
 docker-up:
