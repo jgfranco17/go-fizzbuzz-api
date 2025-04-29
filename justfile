@@ -4,21 +4,15 @@
 default:
     @just --list
 
-# Run debug server
-run-local port:
-    @echo "Starting prototype server on port {{port}}..."
-    go run ./api/cmd/main.go --port={{port}} --dev=true
-
-# Run production server
-run-prod port:
-    @echo "Starting production server on port {{port}}..."
-    go run ./api/cmd/main.go --port {{port}} --dev=false
+# Run the server
+start:
+    go run .
 
 # Execute unit tests
 test:
     @echo "Running unit tests!"
     go clean -testcache
-    go test -cover ./api/...
+    go test -cover ./...
 
 # Build Docker image
 build:
@@ -32,16 +26,12 @@ tidy:
     go work sync
 
 # Start up Docker Compose server
-docker-up:
+compose-up:
     @echo "Starting up full Docker suite..."
-    docker compose up --build
-
-# Start up Docker Compose server in detached mode
-docker-detached:
-    @echo "Starting up full Docker suite..."
-    docker compose up -d
+    docker compose build
+    docker compose up
 
 # Clean up Docker container remnants
-docker-down:
+compose-down:
     docker compose down
     @echo "Compose server closed successfully!"
