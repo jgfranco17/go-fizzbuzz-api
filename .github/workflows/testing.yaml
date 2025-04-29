@@ -24,3 +24,20 @@ jobs:
       - name: Run unit tests
         run: |
           just test
+
+  fuzzing:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        package:
+          - "api/calculation"
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up workspace
+        uses: ./.github/actions/setup-workspace
+
+      - name: Run fuzz tests
+        run: |
+          just fuzz ./${{ matrix.package }}

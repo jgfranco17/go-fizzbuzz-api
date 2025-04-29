@@ -15,4 +15,4 @@ runs:
     - name: Install Go modules
       shell: bash
       run: |
-        just tidy
+        go mod tidy

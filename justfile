@@ -14,6 +14,16 @@ test:
     go clean -testcache
     go test -cover ./...
 
+# Run fuzz tests
+fuzz path:
+    @echo "Running fuzz tests!"
+    go test -fuzz=Fuzz {{ path }} -fuzztime=30s
+
+# Run fuzz tests
+benchmark path:
+    @echo "Running fuzz tests!"
+    go test -bench=. -benchmem  {{ path }}
+
 # Build Docker image
 build:
 	@echo "Building Docker image..."

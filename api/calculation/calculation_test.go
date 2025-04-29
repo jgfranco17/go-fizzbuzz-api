@@ -37,3 +37,27 @@ func TestTestFizzbuzzSequenceInvalidInput(t *testing.T) {
 	assert.ErrorContains(t, err, "Number must be greater than zero")
 	assert.Nil(t, sequence)
 }
+
+func FuzzFizzbuzzSequence(f *testing.F) {
+	validInputs := []int{1, 10, 100, 1000}
+	for _, num := range validInputs {
+		f.Add(num)
+	}
+	f.Fuzz(func(t *testing.T, input int) {
+		if input <= 0 {
+			t.Skip("Skipping non-positive input")
+		}
+		sequence, err := GenerateFizzbuzzSequence(input)
+		assert.NoErrorf(t, err, "Unexpected error for sequence input %d", input)
+		assert.NotEmpty(t, sequence, "Wanted sequence but got none")
+	})
+}
+
+func BenchmarkFizzbuzzSequence(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		_, err := GenerateFizzbuzzSequence(i)
+		if err != nil {
+			b.Fail()
+		}
+	}
+}
