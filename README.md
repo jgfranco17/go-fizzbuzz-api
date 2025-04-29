@@ -43,10 +43,10 @@ To run the API server in dev mode, simply execute either of the following comman
 
 ```bash
 # Default Go execution
-go run service/cmd/main.go --port=8080 --dev=true
+go run service/cmd/main.go --port=8000 --dev=true
 
 # Or, after editing the Makefile to set a port number
-just run-debug 8080
+just run-debug 8000
 ```
 
 ### Build with Docker
@@ -56,7 +56,7 @@ To run the microservice in a container, the package comes with both a Dockerfile
 ```bash
 # Plain Docker build
 docker build -t fizzbuzz-api .
-docker run -p 8080:8080 fizzbuzz-api
+docker run -p 8000:8000 fizzbuzz-api
 
 # Docker-Compose build
 docker compose up

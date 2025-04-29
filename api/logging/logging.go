@@ -38,13 +38,10 @@ func GetLoggerFromContext(ctx context.Context) *logrus.Entry {
 }
 
 // NewLogger configures and registers a new logger instance.
-func NewLogger(isLocal bool) *logrus.Logger {
+func NewLogger() *logrus.Logger {
 	logger := logrus.New()
 	logger.SetReportCaller(true)
-	if isLocal {
-		logger.SetFormatter(&logrus.TextFormatter{})
-	} else {
-		logger.SetFormatter(&logrus.JSONFormatter{})
-	}
+	logger.SetFormatter(&logrus.JSONFormatter{})
+	logger.SetLevel(logrus.InfoLevel)
 	return logger
 }
