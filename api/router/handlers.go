@@ -25,6 +25,22 @@ func GetHomeRoute() http.HandlerFunc {
 	}
 }
 
+func GetHealthCheckRoute() http.HandlerFunc {
+	type healthCheck struct {
+		Status string `json:"status"`
+	}
+	return func(w http.ResponseWriter, r *http.Request) {
+		greeting := healthCheck{
+			Status: "healthy",
+		}
+		err := json.NewEncoder(w).Encode(greeting)
+		if err != nil {
+			http.Error(w, "Failed to serve health-check", http.StatusInternalServerError)
+			return
+		}
+	}
+}
+
 func GetFizzbuzzRoute() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		numberParam := r.URL.Query().Get("number")
